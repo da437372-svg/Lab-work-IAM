@@ -11,7 +11,7 @@
 
 
 
-### 1. Least Privilege
+## 1. Least Privilege
 The following matrix shows the types of users and their roles.
 <img width="603" height="103" alt="Screenshot 2026-08-24 203931" src="https://github.com/user-attachments/assets/c0d23969-aa00-49b4-bf19-ac54d20f3455" />
 
@@ -24,9 +24,8 @@ The following matrix shows the types of users and their roles.
 
 <img width="612" height="132" alt="Screenshot 2026-08-24 202506" src="https://github.com/user-attachments/assets/603cff74-3fd2-4748-b36c-909961870b10" />
 
-# Hands-On Verification & Screenshots
 
-### 2. Separation of Duties (auditor cannot Launch EC2 instance)
+## 2. Separation of Duties (auditor cannot Launch EC2 instance)
 
 
 * **Test:** Sign in as `lab-auditor` and try to launch an EC2 instance.
@@ -38,7 +37,7 @@ The following matrix shows the types of users and their roles.
 *Figure 1: The auditor cannot launch an EC2 instance, because of AmazonEC2ReadOnlyAccess policy*
 
 
-### 3. Developer Account Verification (Explicit Deny Test)
+## 3. Developer Account Verification (Explicit Deny Test)
 * **Test:** Launch instance `iam-developer-test`, stop/start it, and attempt instance termination.
 * **Result:** EC2 creation, start, and stop succeeded. Instance termination failed due to explicit deny policy
 
@@ -48,7 +47,7 @@ The following matrix shows the types of users and their roles.
 
 ---
 
-### 4. Terminate the test instance (Admin can terminate EC2)
+## 4. Terminate the test instance (Admin can terminate EC2)
 * **Test:** Sign in as `lab-admin` and terminate `iam-developer-test`.
 * **Result:** Successful termination Administrator does not inherit the developer's explicit deny rule.
 
