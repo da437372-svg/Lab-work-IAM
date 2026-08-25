@@ -20,7 +20,7 @@ The following matrix shows the types of users and their roles.
 
 
 
-  The access matrix shows how the least privilege was granted to each user.
+  The access matrix shows how least privilege was granted to each user.
 
 <img width="612" height="132" alt="Screenshot 2026-08-24 202506" src="https://github.com/user-attachments/assets/603cff74-3fd2-4748-b36c-909961870b10" />
 
