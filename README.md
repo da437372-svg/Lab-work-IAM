@@ -3,40 +3,30 @@
 * This project demonstrates the implementation of AWS Identity and Access Management (IAM) best practices, focusing on **Least Privilege**, **Role-Based Access Control (RBAC)**, and **Separation of Duties**. Three distinct IAM groups and users were configured to model production access boundaries.
 # Security Concepts Applied
 * **Least Privilege:** Users receive only the permissions required for their specific function.
+  
+* **Separation of Duties:** Administrative, development, and auditing duties are restricted to separate accounts.
 
 * **Explicit Deny Overrides Allow:** Customer-managed deny policy takes precedence over attached broad execution policies.
 
-* **Separation of Duties:** Administrative, development, and auditing duties are restricted to separate accounts.
-  # IAM Architecture & Access Matrix
+
+
+
+### 1. Least Privilege
+The following matrix shows the types of users and their roles.
+<img width="603" height="103" alt="Screenshot 2026-08-24 203931" src="https://github.com/user-attachments/assets/c0d23969-aa00-49b4-bf19-ac54d20f3455" />
+
+
+##                      ##
+
+
+
+  The access matrix shows how the least privilege was granted to each user.
 
 <img width="612" height="132" alt="Screenshot 2026-08-24 202506" src="https://github.com/user-attachments/assets/603cff74-3fd2-4748-b36c-909961870b10" />
 
 # Hands-On Verification & Screenshots
-<ins> **1. Auditor Account Verification** </ins>
 
-• The auditor should be able to open and view:
-
-> EC2 instances
-
-> Security groups
-
-> Key pairs
-
-> Volumes
-
-> Snapshots
-
-> EC2 instances
-
-> Security groups
-
-> Key pairs
-
-> Volumes
-
-> Snapshots
-
- <ins> **2. Test a prohibited operation** </ins>
+### 2. Separation of Duties (auditor cannot Launch EC2 instance)
 
 
 * **Test:** Sign in as `lab-auditor` and try to launch an EC2 instance.
@@ -48,7 +38,7 @@
 *Figure 1: The auditor cannot launch an EC2 instance, because of AmazonEC2ReadOnlyAccess policy*
 
 
-### 2. Developer Account Verification (Explicit Deny Test)
+### 3. Developer Account Verification (Explicit Deny Test)
 * **Test:** Launch instance `iam-developer-test`, stop/start it, and attempt instance termination.
 * **Result:** EC2 creation, start, and stop succeeded. Instance termination failed due to explicit deny policy
 
@@ -58,7 +48,7 @@
 
 ---
 
-### 3. Terminate the test instance
+### 4. Terminate the test instance (Admin can terminate EC2)
 * **Test:** Sign in as `lab-admin` and terminate `iam-developer-test`.
 * **Result:** Successful termination Administrator does not inherit the developer's explicit deny rule.
 
