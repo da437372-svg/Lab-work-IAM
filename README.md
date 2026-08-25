@@ -8,57 +8,62 @@
 
 * **Separation of Duties:** Administrative, development, and auditing duties are restricted to separate accounts.
   # IAM Architecture & Access Matrix
-**AWS Account**
 
-* 📁 Group: Lab-Administrators
-
- * 📜 Attached Policy: AdministartorAcess
-
- * 👤User: lab-admin
-
-##                                ##
-
-* 📁 Group: Lab-Developers
-
-* 📜 Attached Policy: AmazonEC2FullAccess
-
-* 📜 Attached Policy: Deny-EC2-Termination (Custom JSON)
-
-* 👤 User: lab-developer
-
-##                                 ##
-
-* 📁 Group: Lab-Auditors
-   
-* 📜 Attached Policy: AmazonEC2ReadOnlyAccess
-    
- * 👤 User: lab-auditor
+<img width="612" height="132" alt="Screenshot 2026-08-24 202506" src="https://github.com/user-attachments/assets/603cff74-3fd2-4748-b36c-909961870b10" />
 
 # Hands-On Verification & Screenshots
-### 1. Auditor Account Verification
-* **Test:** Sign in as `lab-auditor` and view resources vs. attempting modification.
-* **Result:** Read operations succeeded resource launch/modification was blocked.
-* ![Auditor Access Denied] ./<img width="946" height="515" alt="Screenshot 2026-08-24 184037" src="https://github.com/user-attachments/assets/32347a1e-c945-47f9-a81f-b0fba0e163e3" />
+<ins> **1. Auditor Account Verification** </ins>
+
+• The auditor should be able to open and view:
+
+> EC2 instances
+
+> Security groups
+
+> Key pairs
+
+> Volumes
+
+> Snapshots
+
+> EC2 instances
+
+> Security groups
+
+> Key pairs
+
+> Volumes
+
+> Snapshots
+
+ <ins> **2. Test a prohibited operation** </ins>
 
 
-*Figure 1: AWS Console/CLI throwing an access authorization failure when `lab-auditor` attempts restricted state changes.*
+* **Test:** Sign in as `lab-auditor` and try to launch an EC2 instance.
+* **Result:** EC2 instance creation will be denied.
+* [Auditor Access Denied]
+ <img width="946" height="515" alt="Screenshot 2026-08-24 184037" src="https://github.com/user-attachments/assets/32347a1e-c945-47f9-a81f-b0fba0e163e3" />
+
+
+*Figure 1: The auditor cannot launch an EC2 instance, because of AmazonEC2ReadOnlyAccess policy*
+
 
 ### 2. Developer Account Verification (Explicit Deny Test)
 * **Test:** Launch instance `iam-developer-test`, stop/start it, and attempt instance termination.
 * **Result:** EC2 creation, start, and stop succeeded. Instance termination failed due to explicit deny policy
 
-![Developer Termination Denied](./<img width="1225" height="296" alt="Screenshot 2026-08-24 194701" src="https://github.com/user-attachments/assets/c44e1cb9-5587-4e46-835a-55e9424fdf3e" />
-)
+[Deny EC2 Termination] <img width="1225" height="296" alt="Screenshot 2026-08-24 194701" src="https://github.com/user-attachments/assets/c44e1cb9-5587-4e46-835a-55e9424fdf3e" />
+
 *Figure 2: Console error showing `You are not authorized to perform this operation` when `lab-developer` executes instance termination*
 
 ---
 
-### 3. Administrator Account Verification & Cleanup
+### 3. Terminate the test instance
 * **Test:** Sign in as `lab-admin` and terminate `iam-developer-test`.
 * **Result:** Successful termination Administrator does not inherit the developer's explicit deny rule.
 
-![Admin Termination Success](./<img width="1230" height="316" alt="Screenshot 2026-08-24 194826" src="https://github.com/user-attachments/assets/524234dc-c0d2-4b71-8a36-e812733231a5" />
-)
+[Admin Termination Success] <img width="1230" height="316" alt="Screenshot 2026-08-24 194826" src="https://github.com/user-attachments/assets/524234dc-c0d2-4b71-8a36-e812733231a5" />
+
 *Figure 3: `lab-admin` successfully terminating the test instance.*
 
 ---
